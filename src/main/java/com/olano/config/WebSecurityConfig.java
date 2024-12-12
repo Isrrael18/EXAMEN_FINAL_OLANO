@@ -60,12 +60,15 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(request -> request
-                .requestMatchers(ENDPOINTS_WHITELIST).permitAll() 
-                .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMIN") 
-                .requestMatchers(ENDPOINTS_AS).hasAnyRole("ADMIN", "SECRETARIO") 
-                .anyRequest().authenticated() 
+                .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
+                .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMIN")
+                .requestMatchers(ENDPOINTS_AS).hasAnyRole("ADMIN", "SECRETARIO")
+                .anyRequest().authenticated()
             )
             .csrf(csrf -> csrf.disable())
+            .exceptionHandling(handling -> handling
+                .accessDeniedPage("/acceso")
+            )
             .formLogin(form -> form
                 .loginPage(LOGIN_URL)
                 .loginProcessingUrl(LOGIN_URL)

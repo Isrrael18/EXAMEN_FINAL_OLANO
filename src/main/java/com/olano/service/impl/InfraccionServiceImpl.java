@@ -48,9 +48,12 @@ public class InfraccionServiceImpl implements InfraccionService {
     public Infraccion findById(int id) {
         return infraccionRepository.findById(id).orElse(null);
     }
-
+    
     @Override
     public Infraccion save(Infraccion infraccion) {
+        if (infraccion.getFecha().after(new Date())) {
+            throw new ValidateException("La fecha de la infracción no puede ser una fecha futura");
+        }
         try {
             InfraccionValidator.validate(infraccion);
         } catch (ValidateException e) {

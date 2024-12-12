@@ -45,5 +45,9 @@ public class MainController {
         return "dashboard";
     }
     
+    @GetMapping("/acceso")
+    public String acceso() {
+        return "acceso";
+    }
    
 }
